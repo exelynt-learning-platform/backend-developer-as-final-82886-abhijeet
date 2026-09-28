@@ -1,0 +1,22 @@
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+  datasource:
+    url: jdbc:h2:mem:booking_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+
+jwt:
+  secret: test-only-secret-key-that-is-at-least-32-bytes-long
+  expiration-ms: 3600000

@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: resource-booking-system
+
+  jackson:
+    deserialization:
+      # An unrecognized field (e.g. a client trying to slip "userId" into a
+      # reservation payload) is a 400, not a silent no-op.
+      fail-on-unknown-properties: true
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/booking_db}
+    username: ${DB_USERNAME:booking_user}
+    password: ${DB_PASSWORD:booking_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # 'validate' in real deployments once you're on migrations (Flyway/Liquibase);
+      # 'update' here keeps the exercise runnable with zero extra setup.
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+
+jwt:
+  # MUST be overridden via JWT_SECRET in any real deployment — see README.
+  secret: ${JWT_SECRET:change-this-super-secret-key-before-deploying-to-anything-real}
+  expiration-ms: ${JWT_EXPIRATION_MS:3600000}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    org.springframework.security: ${SECURITY_LOG_LEVEL:INFO}
